@@ -45,24 +45,27 @@ const createMenu = (objeto) => {
     fetchMenu: () => objeto,
     consumption: [],
     order: (string) => {
-      for (const key in objeto) {
-        const food1 = Object.keys(objeto[key]);
-        if (food1[0] === string || food1[1] === string) {
-          objetoMenu.consumption.push(string);
-        }
+      const teste = Object.keys(objeto.food);
+      const teste1 = Object.keys(objeto.drinks);
+      if (teste[0] === string || teste[1] === string) {
+        objetoMenu.consumption.push(string);
+      }
+      if (teste1[0] === string || teste1[1] === string) {
+        objetoMenu.consumption.push(string);
       }
     },
-    pay: 'se for coxinha dentro de consumption retorna 3.90 * 10%' ,
+    pay: () => {
+      if (objetoMenu.consumption.length === 0) {
+        return 'Item indisponível';
+      }
+      if (objeto) {
+        return objeto.food[objetoMenu.consumption[0]] * 1.1;
+      }
+    },
   };
-
 
   return objetoMenu;
 };
-const menu = { food: { coxinha: 3.90, sanduiche: 9.90 }, drinks: { agua: 3.90, cerveja: 6.90 } };
-const enviar = createMenu(menu);
-enviar.order('coxinha');
-console.log(enviar.consumption);
-
 // Faça o item 5 no arquivo tests/restaurant.spec.js
 
 // 6: Adicione ao objeto retornado por `createMenu()` uma chave de nome `consumption` que, como valor inicial, tem um array vazio.
