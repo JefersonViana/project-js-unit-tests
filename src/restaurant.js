@@ -40,32 +40,48 @@
 
 // 4: Crie uma função `createMenu()` que, recebendo um objeto como parâmetro, retorna esse objeto no seguinte formato: 
 //  { fetchMenu: () => objetoPassadoPorParametro }.
+const validacao = (arrayPay) => {
+  let sum = 0;
+  arrayPay.forEach((elemento) => {
+    if (elemento === 'coxinha' || elemento === 'agua') {
+      sum += 3.90;
+    } else if (elemento === 'cerveja') {
+      sum += 6.90;
+    }
+    if (elemento === 'sanduiche') {
+      sum += 9.90;
+    }
+  });
+  return sum;
+};
 const createMenu = (objeto) => {
   const objetoMenu = {
     fetchMenu: () => objeto,
     consumption: [],
-    order: (string) => {
-      const teste = Object.keys(objeto.food);
-      const teste1 = Object.keys(objeto.drinks);
-      if (teste[0] === string || teste[1] === string) {
-        objetoMenu.consumption.push(string);
-      }
-      if (teste1[0] === string || teste1[1] === string) {
-        objetoMenu.consumption.push(string);
-      }
+    order: (...string) => {
+      const arrayKeys = ['coxinha', 'sanduiche', 'agua', 'cerveja'];
+      string.forEach((elemento) => {
+        arrayKeys.forEach((key) => {
+          if (key === elemento) {
+            objetoMenu.consumption.push(elemento);
+          }
+        });
+      });
     },
     pay: () => {
+      const arrayPay = objetoMenu.consumption;
       if (objetoMenu.consumption.length === 0) {
         return 'Item indisponível';
       }
-      if (objeto) {
-        return objeto.food[objetoMenu.consumption[0]] * 1.1;
-      }
+      let sum = validacao(arrayPay);
+      
+      return Math.round(sum * 1.1);
     },
   };
 
   return objetoMenu;
 };
+
 // Faça o item 5 no arquivo tests/restaurant.spec.js
 
 // 6: Adicione ao objeto retornado por `createMenu()` uma chave de nome `consumption` que, como valor inicial, tem um array vazio.

@@ -77,11 +77,26 @@ describe('10 - Implemente a função `createMenu`, bem como seus casos de teste'
   // 8: Faça a implementação do item 8 do README no arquivo src/restaurant.js.
 
   // 9: Verifique se, ao adicionar três pedidos em sequência, dentre bebidas e comidas, o array `objetoRetornado.consumption` contém os itens pedidos.
-
+  it('Verifique se, ao adicionar três pedidos em sequência, dentre bebidas e comidas, o array `objetoRetornado.consumption` contém os itens pedidos.', () => {
+    const menu = { food: { coxinha: 3.90, sanduiche: 9.90 }, drinks: { agua: 3.90, cerveja: 6.90 } };
+    const enviar = createMenu(menu);
+    enviar.order('coxinha', 'agua', 'cerveja');
+    expect(enviar.consumption).toEqual(['coxinha', 'agua', 'cerveja']);
+  })
   // 10: Verifique se a função `order` aceita que pedidos repetidos sejam acrescidos a `consumption`.
-
+  it('Verifique se a função `order` aceita que pedidos repetidos sejam acrescidos a `consumption`.', () => {
+    const menu = { food: { coxinha: 3.90, sanduiche: 9.90 }, drinks: { agua: 3.90, cerveja: 6.90 } };
+    const enviar = createMenu(menu);
+    enviar.order('coxinha', 'agua', 'cerveja', 'agua');
+    expect(enviar.consumption).toEqual(['coxinha', 'agua', 'cerveja', 'agua']);
+  })
   // 11: Verifique se, ao chamar `objetoRetornado.pay()`, retorna-se a soma dos preços de tudo que foi pedido, acrescido de 10%, conforme registrado em `objetoRetornado.consumption`.
-
+  it('Verifique se, ao chamar `objetoRetornado.pay()`, retorna-se a soma dos preços de tudo que foi pedido, acrescido de 10%, conforme registrado em `objetoRetornado.consumption`.', () => {
+    const menu = { food: { coxinha: 3.90, sanduiche: 9.90 }, drinks: { agua: 3.90, cerveja: 6.90 } };
+    const objetoRetornado = createMenu(menu);
+    objetoRetornado.order('coxinha', 'agua', 'cerveja', 'agua');
+    expect(objetoRetornado.pay()).toBeCloseTo(20,46);
+  })
   // 12: Faça a implementação do item 12 do README no arquivo src/restaurant.js.
 
 
